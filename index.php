@@ -2,6 +2,7 @@
 
   include 'funciones/EnviarMensaje.php';
 
-  makeMessage($_REQUEST["name"], $_REQUEST["phone"], $_REQUEST["stage"], $_REQUEST["type"], $_REQUEST["qr"]);
+  greeting($_REQUEST["name"], $_REQUEST["phone"]);
+  // makeMessage($_REQUEST["name"], $_REQUEST["id"], $_REQUEST["phone"], $_REQUEST["stage"], $_REQUEST["type"], $_REQUEST["qr"]);
 
 ?>

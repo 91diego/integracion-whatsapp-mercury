@@ -13,10 +13,11 @@
         // 127621 instance
         // qmeckcs8g738916u token
 
+        // ESTRUCTURA DE API
         $urlAPi = "https://eu79.chat-api.com/instance".$instance."/sendMessage?token=".$token;
+        
         // GENERAMOS EL ENVIO DEL MENSAJE VIA WHATSAPP
         $curl = curl_init();
-
         curl_setopt_array($curl, array(
 
             // CURLOPT_URL => "https://api.mercury.chat/sdk/whatsapp/sendMessage?api_token=5ebec8e1ae0788001262b64cTjGsnxnFC&instance=L1589561569500Q",
@@ -37,21 +38,17 @@
         ));
 
         $response = curl_exec($curl);
-
         curl_close($curl);
         echo $response;
     }
-    /**
-     * MAKE STRUCTURE OF THE MESSAGE
-     * 
-     * @param string $name
-     * @param int $phone -> PHONE OF DEAL
-     * @param string $stage -> STAGE OF THE DEAL IN CRM
-     * @param string $type -> TYPE OF SENDING MESSAGE
-     * @param string $qr -> QR CODE OF THE DEAL
-     */
-    function makeMessage($name, $phone, $stage, $type, $qr) {
 
+    /**
+     * GREETIN TO CLIENT
+     * @param string $name -> NAME OF THE DEAL
+     * @param int $phone -> PHONE OF DEAL
+     */
+    function greeting($name, $phone) {
+        
         // GENERAMOS EL SALUDO AL CLIENTE
         $greeting = [
 
@@ -62,27 +59,40 @@
         ];
         // TRANSFORMAMOS EL ARRAY A JSON
         $dataGreeting = json_encode($greeting);
-
+        // EMVIAMOS EL MENSAJE CON EL SALUDO
         sendWhatsapp($dataGreeting, '127621', 'qmeckcs8g738916u');
-        exit;
+    }
 
-        // ALMACENAMOS LA INFORMACION DEL JSON EN UN ARRAY
+    /**
+     * MAKE STRUCTURE OF THE MESSAGE
+     * 
+     * @param string $name -> NAME OF THE DEAL
+     * @param int id -> ID DEAL
+     * @param int $phone -> PHONE OF DEAL
+     * @param string $stage -> STAGE OF THE DEAL IN CRM
+     * @param string $type -> TYPE OF SENDING MESSAGE
+     * @param string $qr -> QR CODE OF THE DEAL
+     */
+    function makeMessage($name, $id, $phone, $stage, $type, $qr) {
+
+        // ARRAY PARA ALMACENAR LA INFORMACION DE ACUERDO EL TIPO DE ENVIO
         $data = [];
+
         // VERIFICAMOS EL TIPO DE ENVIO PARA DETERMINAR LA ESTRUCTURA DEL JSON
-        /*switch ($type) {
+        switch ($type) {
             case 'encuesta':
                 $data = [
                     "chatId" => "521".$phone."@c.us",
                     "body" => "Estimado ".$name.
                     ", por este medio le hacemos llegar nuestra encuesta de servicio ".
                     "la cual puede contestar en el siguiene enlace www.google.com"
-                ]
+                ];
                 break;
             
             default:
                 # code...
                 break;
-        }*/
+        }
 
         // ESTRUCTURA DE ARRAY PARA GUARDAR LOS VALORES
         /* $data = [
